@@ -1,7 +1,8 @@
 # coding: utf-8
+import time
 import smbus
-
-bus = smbus.SMBus(0)  # pour I2C-1 (0 pour I2C-0)
+global bus
+bus = smbus.SMBus(1)  # pour I2C-1 (0 pour I2C-0)
 
 # Indiquez ici les deux adresses de l'ecran LCD
 # celle pour les couleurs du fond d'ecran 
@@ -10,7 +11,7 @@ bus = smbus.SMBus(0)  # pour I2C-1 (0 pour I2C-0)
 #DISPLAY_TEXT_ADDR = ....
 def init(pin):
 	bus=pin #only 1 or 0
-    global bus
+  
 
 # this device has two I2C addresses
 DISPLAY_RGB_ADDR = 0x62

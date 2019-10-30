@@ -33,7 +33,7 @@ def readTemp(seconds):
 def showTemp():
     try:
         # The first parameter is the port, the second parameter is the type of sensor.
-        temp = dht(sensor)  
+        [temp,humidity] = dht(sensor,blue)  
         if math.isnan(temp) == False:
             return temp
 
