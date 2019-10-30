@@ -5,18 +5,19 @@ import csv
 ser = serial.Serial('/dev/ttyACM0',115200)
 
 class Identif(Thread):
-	"""Thread chargé simplement d'afficher un mot dans la console."""
-
     def __init__(self):
-        Thread.__init__(self)
-        self.userId = 0
-        self.name=""
+            Thread.__init__(self)
+            self.userId = 0
+            self.name=""
 
     def run(self):
-        """Code à exécuter pendant l'exécution du thread."""
-        while True :
-        	#self.userId = 0
-        	"""
+            while True :
+                    lecture_id = ser.readline()
+                    print(lecture_id)
+                    self.userId = 1
+                    
+                    #self.userId = 0
+                    """
 			with open('users.csv','r') as file :
 				str_id =""
 				dico={}
@@ -35,7 +36,7 @@ class Identif(Thread):
         	
         	"""
 			# lecture_id = ser.readLine()
-   #      	if (lecture_id in str_id):
-        	self.userId = 1 #on a identifé un utilisateur
-        	#self.name = dico[lecture_id]
-		
+                        #      	if (lecture_id in str_id):
+                        #self.userId = 1
+                        #self.name = dico[lecture_id]
+                        

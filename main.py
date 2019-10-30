@@ -9,9 +9,9 @@ temphumi.init(2) #plug on D2
 #buttonDelete = Button(4)
 
 #Identif(Thread).start()
-thread = Identif()
+thread = thRfid.Identif()
 thread.start()
-ser = serial.Serial('/dev/ttyACM0',115200)
+#ser = serial.Serial('/dev/ttyACM0',115200)
 
 while True:
         try :
@@ -32,8 +32,8 @@ while True:
 		showTemp = "temp = %.02f C"%temp
                 #ecranlcd.setText(showTemp)
 
-		id = ser.readLine()
-                print(id)
+		#id = ser.readLine()
+                #print(id)
                 time.sleep(2)
                 if(thread.userId == 1 ) :
                         print(thread.userId)
