@@ -2,7 +2,7 @@ from utils import buzzer,temphumi,ecranlcd
 import time
 buzzer.init(8) #plug on D8
 temphumi.init(2) #plug on D2
-ecranlcd.init(0) #plug on I2C-0
+#ecranlcd.init(0) #plug on I2C-0
 #grovepi.pinMode(buzzer, "OUTPUT")
 
 while True:
@@ -13,15 +13,15 @@ while True:
 #OR
     	temp =  temphumi.showTemp()
 	print(temp)
-	if (temp > 22):
+	if (temp > 23):
 		print(temp)
 		buzzer.turnOn()
 		
-		time.sleep(2) # 10sec of buzzer
+		time.sleep(0.06) # 10sec of buzzer
 		buzzer.turnOff()
 
 	showTemp = "temp = %.02f C"%temp
-	ecranlcd.setText(showTemp)
+	#ecranlcd.setText(showTemp)
 	time.sleep(2)
 	
 
