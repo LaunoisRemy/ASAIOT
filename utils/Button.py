@@ -1,19 +1,19 @@
 import time
-import grovepi
+from utils.grovepi import *
 
 # Connect the Grove Button to digital port D3
 # SIG,NC,VCC,GND
 class Button :
-	#button = 0
+        #button = 0
 
 	def __init__(pin):
-	    self.button=pin
-		grovepi.pinMode(self.button,"INPUT")
-			
+                self.button=pin
+                pinMode(self.button,"INPUT")
+                
 	def read():
-		return grovepi.digitalRead(self.button)
+                return digitalRead(self.button)
 
-	def verifRead(): #renvoi true quand le bouton est appuyé
-		return grovepi.digitalRead(self.button) == 1
+	def verifRead():
+                return digitalRead(self.button) == 1
 
 

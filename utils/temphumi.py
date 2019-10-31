@@ -1,6 +1,6 @@
 # GrovePi + Grove Temp/Humi Sensor
 
-from grovepi import *
+from utils.grovepi import *
 import math
 import time
 
