@@ -1,4 +1,4 @@
-from utils import buzzer,temphumi,ecranlcd,thRfid
+from utils import buzzer,temphumi,ecranlcd,thRfid,thTemp
 import time
 buzzer.init(8) #plug on D8
 temphumi.init(2) #plug on D2
@@ -11,25 +11,23 @@ temphumi.init(2) #plug on D2
 #Identif(Thread).start()
 thread = thRfid.Identif()
 thread.start()
+
+temp = thTemp.Temp()
+temp.start()
 #ser = serial.Serial('/dev/ttyACM0',115200)
 
 while True:
         try :
-                #temphumi.readTemp(5) # read temperature each 2 minutes
-                #buzzer.turnOn()
-                #time.sleep(2)
-                #buzzer.turnOff()
-                #OR
-                temp =  temphumi.showTemp()
-                print(temp)
-                if (temp > 23):
-                        print(temp)
-                        buzzer.turnOn()
-                        
-			time.sleep(0.06) # 10sec of buzzer
-                        buzzer.turnOff()
+        		if(temp.temp != 0) :
+                        print(temp.temp)
+                        if(temp.temp > 8):
+                        	#met en route le buzzer
+                        	buzzer.turnOn()
+                        	time.sleep(0.06) # 10sec of buzzer
+                        	buzzer.turnOff()
 
-		showTemp = "temp = %.02f C"%temp
+
+				#showTemp = "temp = %.02f C"%temp
                 #ecranlcd.setText(showTemp)
 
 		#id = ser.readLine()
