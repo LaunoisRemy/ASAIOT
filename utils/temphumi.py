@@ -6,15 +6,14 @@ import time
 
 # Connect the Grove Temperature & Humidity Sensor Pro to digital port D4
 # SIG,NC,VCC,GND
-sensor = 0
 
 # temp_humidity_sensor_type
 blue = 0    # The Blue colored sensor.
 
 def init(pin):
+    global sensor
     sensor=pin
     pinMode(pin,"INPUT")
-    global sensor
 
 # Take measurements of the sensor each X seconds
 def readTemp(seconds):

@@ -1,13 +1,15 @@
 import time
-import utils.grovepi
+import utils.grovepi as grovepi
 
-def readValue() :
-    # Connect the Grove Rotary Angle Sensor to analog port A1
-    # SIG,NC,VCC,GND
-    potentiometer = 1
+def init(pin):
+    global potentiometer
+    
+    potentiometer = pin
 
     grovepi.pinMode(potentiometer,"INPUT")
     time.sleep(1)
+
+def readValue() :
 
     # Reference voltage of ADC is 5v
     adc_ref = 5
@@ -31,13 +33,7 @@ def readValue() :
 
     return val1
 
-def readValue() :
-    # Connect the Grove Rotary Angle Sensor to analog port A1
-    # SIG,NC,VCC,GND
-    potentiometer = 1
-
-    grovepi.pinMode(potentiometer,"INPUT")
-    time.sleep(1)
+def readValueChoix() :
 
     # Reference voltage of ADC is 5v
     adc_ref = 5
