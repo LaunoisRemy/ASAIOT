@@ -56,3 +56,28 @@ def readValueChoix() :
     val1 = degrees//150
 
     return val1
+
+
+def readFromNb(nb):
+    # Reference voltage of ADC is 5v
+    adc_ref = 5
+
+    # Vcc of the grove interface is normally 5v
+    grove_vcc = 5
+
+    # Full value of the rotary angle is 300 degrees, as per it's specs (0 to 300)
+    full_angle = 300
+
+    # Read sensor value from potentiometer
+    sensor_value = grovepi.analogRead(potentiometer)
+
+    # Calculate voltage
+    voltage = round((float)(sensor_value) * adc_ref / 1023, 2)
+
+    # Calculate rotation in degrees (0 to 300)
+    degrees = round((voltage * full_angle) / grove_vcc, 2)
+
+    diviseur = 300/nb
+    val1 = degrees//diviseur
+
+    return val1
