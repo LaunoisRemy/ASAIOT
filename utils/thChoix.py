@@ -70,13 +70,17 @@ class Choix(Thread):
                 time.sleep(2)
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
-                            self.step = 3 
+                            self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 0
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          elif(valPotentio == 1):
@@ -85,12 +89,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 1
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          elif(valPotentio == 2):
@@ -99,12 +107,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 2
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          elif(valPotentio == 3):
@@ -113,12 +125,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 3
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          elif(valPotentio == 4):
@@ -127,12 +143,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 4
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          elif(valPotentio == 5):
@@ -141,12 +161,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2 
 
                         self.categorie = 5
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          elif(valPotentio == 6):
@@ -155,12 +179,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 6
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
          else:
@@ -169,12 +197,16 @@ class Choix(Thread):
                 if(self.buttonV.verifRead(self.buttonV.button)):
                         if(self.choice): #prendre un aliment
                             self.step = 3
+                            ecranlcd.setText("Choisissez parmi la liste : ")
+                            time.sleep(5)
                         else : #poser
                             self.step = 2
 
                         self.categorie = 7
 
                 if(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
                         self.step = 0
 
     def depot(self):
@@ -189,17 +221,13 @@ class Choix(Thread):
 
 
     def prise(self):
-        ecranlcd.setText("Choisissez parmi la liste : ")
         categorie = self.convertCat(self.categorie)
         liste = self.listAl(categorie)
         taille = len(liste)
-        print("taille : %d",taille)
         valPotentio = potentio.readFromNb(taille)
         for i in range(1,taille+1):
             #for r in liste:
                 if liste[i-1][2] != '0':
-                    print("pot : %d" ,valPotentio)
-                    print("i %d:",i)
                     if(valPotentio == taille - (i)):
                         ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
                         time.sleep(2)
@@ -209,9 +237,26 @@ class Choix(Thread):
                             ecranlcd.setText("Choisissez une quantite : ")
                             time.sleep(2)
                             self.step = 4 #choix quantite
+
+                        if(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule")
+                            time.sleep(5)
+                            self.step = 0
+                        
                     elif(valPotentio == taille):
                         ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
-                        time.sleep(2)    
+                        time.sleep(2)
+
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.id = liste[i-1][0]
+                            ecranlcd.setText("Choisissez une quantite : ")
+                            time.sleep(2)
+                            self.step = 4 #choix quantite
+
+                        if(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule")
+                            time.sleep(5)
+                            self.step = 0
             
 
 
@@ -227,13 +272,31 @@ class Choix(Thread):
                 time.sleep(3)
                 if(self.buttonV.verifRead(self.buttonV.button)):
                     self.qte = i
-                    self.majStock(self.qte)
+                    self.majStock()
                     ecranlcd.setText("Retirez le(s) aliment(s) du frigo")
                     time.sleep(5)
                     self.step = 6 #fin
+
+                if(self.buttonD.verifRead(self.buttonD.button)):
+                    ecranlcd.setText("Vous avez annule")
+                    time.sleep(5)
+                    self.step = 0
+                    
             elif(valPotentio == quantite):
                 stri = str(quantite)
                 ecranlcd.setText(""+stri+"")
+                time.sleep(3)
+                if(self.buttonV.verifRead(self.buttonV.button)):
+                    self.qte = i
+                    self.majStock()
+                    ecranlcd.setText("Retirez le(s) aliment(s) du frigo")
+                    time.sleep(5)
+                    self.step = 6 #fin
+
+                if(self.buttonD.verifRead(self.buttonD.button)):
+                    ecranlcd.setText("Vous avez annule")
+                    time.sleep(5)
+                    self.step = 0
                     
         
     def fin(self):
@@ -282,8 +345,27 @@ class Choix(Thread):
             return 'AUTRES'
 
                                  
-    def majStock(self,qte):
-        print("Mettre a jour le stock")
+    def majStock(self):
+        text = open("./utils/stock.csv", "r")
+        txt=csv.reader(text)
+
+        liste=[]
+            
+        for ligne in txt :
+            if(ligne[0]==self.id):
+                nv_qte=int(ligne[2]) - int(self.qte) #quantite apres soustraction de la quantite choisie par l utilisateur
+		nv_qte=str(nv_qte)
+                ligne[2]=ligne[2].replace(ligne[2],nv_qte)
+                
+            liste.append(ligne)
+
+        out=open("./utils/stock.csv", "w")
+        wr=csv.writer(out)  
+        wr.writerows(liste)
+        out.close()
+        text.close()
+        print("Mise a jour du stock")
+
 
         
     def pause(self):
