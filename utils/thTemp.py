@@ -1,4 +1,5 @@
 import serial
+import dweepy
 from threading import Thread
 import csv
 import utils.grovepi as grovepi
@@ -21,7 +22,9 @@ class Temp(Thread):
                 if math.isnan(temp) == False and math.isnan(humidity) == False:
                     self.temp = temp
                     print(self.temp)
-                    time.sleep(2)
+                    temperature = str(self.temp)
+                    dweepy.dweet_for('data_temp', {'temp':temperature})
+                    time.sleep(8)
                     if(self.temp > 24):
                         #met en route le buzzer
                         buzzer.turnOn()
