@@ -1,6 +1,8 @@
 from utils import grovepi,buzzer,temphumi,ecranlcd,thRfid,thTemp,thChoix,Button,potentio
 import time
 import sys
+import os
+from utils import dweepy
 
 buzzer.init(8) #plug on D8
 temphumi.init(2) #plug on D2
@@ -20,6 +22,13 @@ choix = thChoix.Choix()
 choix.start()
 #choix.buttonV = buttonValidate
 #choix.buttonD = buttonDelete
+
+#creation de l alerte dweep si la temp depasse le seuil
+lock = os.environ.get('DWEET_LOCK')
+key = os.environ.get('DWEET_KEY')
+condtion_alert="if(dweet.temp > 24) return 'TEST: Greater than 24';"
+dweepy.lock('data_temp',lock,key)
+dweepy.set_alert('data_temp','alert_frigo@yopmail.com',condition_alert,key)
 
 
 while True:
