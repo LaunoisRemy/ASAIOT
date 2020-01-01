@@ -17,6 +17,7 @@ class Choix(Thread):
             self.buttonD = Button.Button(4)
             self.paused = False
             self.step = 0
+            self.name=""
             self.choice = False #permet de savoir si l'utilisateur a choisi de poser (True) ou de prendre (False)
             self.categorie = 0 #numero de categorie
             self.id = 0 #id de l'aliment
@@ -27,7 +28,7 @@ class Choix(Thread):
             self.a = "2020" #annee par defaut
 
     def run(self):
-            ecranlcd.setText("Faites un choix :")
+            ecranlcd.setText("Connectez vous")
             ecranlcd.setRGB(0,0,255)
             time.sleep(5)
             while True :
@@ -51,8 +52,13 @@ class Choix(Thread):
          else : self.fin()
 
     def debut(self):
-         valPotentio = potentio.readValueChoix()
-         if(valPotentio == 0):
+        msg = "Bonjour " + self.name
+        ecranlcd.setText(msg)
+        time.sleep(3)
+        ecranlcd.setText("Faites un choix :")
+        time.sleep(3)
+        valPotentio = potentio.readValueChoix()
+        if(valPotentio == 0):
                   ecranlcd.setText("Poser un aliment")
                   time.sleep(3)
                   if(self.buttonV.verifRead(self.buttonV.button)):
@@ -60,7 +66,7 @@ class Choix(Thread):
                         self.choice = False
                   #print(self.buttonV.verifRead())
                                         
-         else :
+        else :
                   ecranlcd.setText("Prendre un aliment")
                   time.sleep(3)
                   if(self.buttonV.verifRead(self.buttonV.button)):
@@ -512,6 +518,8 @@ class Choix(Thread):
          ecranlcd.setText("Merci au revoir")
          time.sleep(2)
          ecranlcd.setText("")
+         self.identif = 0
+         #self.run()
 
     def listeQte(self,id):
         liste=[]
