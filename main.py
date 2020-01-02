@@ -19,8 +19,6 @@ thread.start()
 temp = thTemp.Temp()
 temp.start()
 
-choix = thChoix.Choix()
-choix.start()
 #choix.buttonV = buttonValidate
 #choix.buttonD = buttonDelete
 
@@ -31,20 +29,21 @@ condition_alert="if(dweet.temp > 24) return 'TEST: Greater than 24';"
 #dweepy.lock('data_temp',lock,key)
 #dweepy.set_alert('data_temp','alert_frigo@yopmail.com',condition_alert,key)
 
-
+"""
 while True:
-        
+       
         #showTemp = "temp = %.02f C"%temp
         #ecranlcd.setText(showTemp)
 
         #id = ser.readLine()
         #print(id)
         try :
+               
                 time.sleep(2)
                 if(thread.userId == 1 ) :
                         choix.name = thread.name
                         choix.identif = 1
-                                
+                              
         except KeyboardInterrupt:
                 sys.exit(0)
 
@@ -52,6 +51,6 @@ while True:
                 print ("Error")
                 
         
-        
+        """
 
 
