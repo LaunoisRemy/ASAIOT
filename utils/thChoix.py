@@ -25,30 +25,29 @@ class Choix():
             self.m = "01" #mois par defaut
             self.a = "2020" #annee par defaut
 
-    def run(self):
-            ecranlcd.setText("Connectez vous")
-            ecranlcd.setRGB(0,0,255)
-            time.sleep(5)
-            while True :
-                   with self.pause_cond:
-                        while self.paused :
-                                self.pause_cond.wait()
-                        if(self.identif == 1):
-                                       
-                                self.choix()
-                        #print(self.identif)
+    # def run(self):
+    #         ecranlcd.setText("Connectez vous")
+    #         ecranlcd.setRGB(0,0,255)
+    #         time.sleep(5)
+    #         while True :
+    #                with self.pause_cond:
+    #                     while self.paused :
+    #                             self.pause_cond.wait()
+    #                     if(self.identif == 1):
+    #                             self.choix()
                         
-    def choix(self):
-         if(self.step == 0) : self.debut()
-         elif(self.step == 1) : self.categories()
-         elif(self.step == 2) : self.depot()
-         elif(self.step == 3) : self.prise()
-         elif(self.step == 4) : self.quantite()
-         elif(self.step == 5) : self.quantiteDepot()
-         elif(self.step == 6) : self.choixDate()
-         elif(self.step == 7) : self.datePeremption()
-         else : self.fin()
+    # def choix(self):
+    #      if(self.step == 0) : self.debut()
+    #      elif(self.step == 1) : self.categories()
+    #      elif(self.step == 2) : self.depot()
+    #      elif(self.step == 3) : self.prise()
+    #      elif(self.step == 4) : self.quantite()
+    #      elif(self.step == 5) : self.quantiteDepot()
+    #      elif(self.step == 6) : self.choixDate()
+    #      elif(self.step == 7) : self.datePeremption()
+    #      else : self.fin()
 
+    #Choix de l utilisateur : prise ou depot d aliments
     def debut(self):
         self.step = 0
         while self.step == 0 :
@@ -66,6 +65,7 @@ class Choix():
                     self.choice = True
                     self.categories()
 
+    #Afficher les differentes categories 
     def categories(self):
         choix = False
         while choix == False :
@@ -142,12 +142,14 @@ class Choix():
                             choix = True
                             self.prise()
                         else : #poser
-                            self.step = 2
+                            choix = True
+                            self.depot()
 
                 elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
-                        self.step = 0
+                        choix = True
+                        self.debut()
 
             elif(valPotentio == 4):
                 ecranlcd.setText("Cuisines")
@@ -160,12 +162,14 @@ class Choix():
                             choix = True
                             self.prise()
                         else : #poser
-                            self.step = 2
+                            choix = True
+                            self.depot()
 
                 elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
-                        self.step = 0
+                        choix = True
+                        self.debut()
 
             elif(valPotentio == 5):
                 ecranlcd.setText("Laitages")
@@ -178,12 +182,14 @@ class Choix():
                             choix = True
                             self.prise()
                         else : #poser
-                            self.step = 2 
+                            choix = True
+                            self.depot()
 
                 elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
-                        self.step = 0
+                        choix = True
+                        self.debut()
 
             elif(valPotentio == 6):
                 ecranlcd.setText("Boissons")
@@ -196,12 +202,14 @@ class Choix():
                             choix = True
                             self.prise()
                         else : #poser
-                            self.step = 2
+                            choix = True
+                            self.depot()
 
                 elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
-                        self.step = 0
+                        choix = True
+                        self.debut()
 
             else:
                 ecranlcd.setText("Autres")
@@ -214,260 +222,41 @@ class Choix():
                             choix = True
                             self.prise()
                         else : #poser
-                            self.step = 2
+                            choix = True
+                            self.depot()
 
                 elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
-                        self.step = 0
+                        choix = True
+                        self.debut()
             
-
+    #Affichage des noms des produits pour la categorie choisie
     def depot(self):
         categorie = self.convertCat(self.categorie)
         liste = self.listAl(categorie)
         taille = len(liste)
-        valPotentio = potentio.readFromNb(taille)
-        for i in range(1,taille+1):
-            #for r in liste:
-                if(valPotentio == taille - (i)):
-                    ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
-                    time.sleep(2)
-                        
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.id = liste[i-1][0]
-                        ecranlcd.setText("Choisissez une quantite : ")
-                        time.sleep(2)
-                        self.step = 5 #choix quantite
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule")
-                        time.sleep(5)
-                        self.step = 0
-                        
-                elif(valPotentio == taille):
-                    ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
-                    time.sleep(2)
-
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.id = liste[i-1][0]
-                        ecranlcd.setText("Choisissez une quantite : ")
-                        time.sleep(2)
-                        self.step = 5 #choix quantite
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule")
-                        time.sleep(5)
-                        self.step = 0
-        # ecranlcd.setText("Entrez le nom de l'aliment a deposer : ")
-        # #input de l'utilisateur 
-        # nom = input()
-        # ecranlcd.setText("Entrez la date de perremption : ")
-        # date = input() #peut etre vide 
-        # ecranlcd.setText("Entrez la quantite : ")
-        # quantite = input()
-        # #mettre les infos dans le csv
-
-    def quantiteDepot(self):
-        liste = self.listeQte(self.id)
-        quantite = 10 #on met une quantite max a 10
-        valPotentio = potentio.readFromNb(quantite)
-        #print(quantite)
-        for i in range(1,quantite+1) :
-            if(valPotentio == quantite - (i)):
-                stri = str(i)
-                ecranlcd.setText(""+stri+"")
-                time.sleep(3)
-                if(self.buttonV.verifRead(self.buttonV.button)):
-                    self.qte = i
-                    self.majStock(True)
-                    ecranlcd.setText("Date de peremption ?")
-                    time.sleep(5)
-                    self.step = 6 #choix date de peremption
-
-                elif(self.buttonD.verifRead(self.buttonD.button)):
-                    ecranlcd.setText("Vous avez annule")
-                    time.sleep(5)
-                    self.step = 0
-                    
-            elif(valPotentio == quantite):
-                stri = str(quantite)
-                ecranlcd.setText(""+stri+"")
-                time.sleep(3)
-                if(self.buttonV.verifRead(self.buttonV.button)):
-                    self.qte = i
-                    self.majStock(True)
-                    ecranlcd.setText("Date de peremption ?")
-                    time.sleep(5)
-                    self.step = 6 #choix date de peremption
-
-                elif(self.buttonD.verifRead(self.buttonD.button)):
-                    ecranlcd.setText("Vous avez annule")
-                    time.sleep(5)
-                    self.step = 0
-
-    def choixDate(self):
-        valPotentio = potentio.readFromNb(2)
-        if(valPotentio == 0):
-            ecranlcd.setText("Oui")
-            time.sleep(3)
-            if(self.buttonV.verifRead(self.buttonV.button)):
-                ecranlcd.setText("Entrez la date")
-                time.sleep(5)
-                self.step = 7 #date de peremption
-
-            elif(self.buttonD.verifRead(self.buttonD.button)):
-                ecranlcd.setText("Vous avez annule")
-                time.sleep(5)
-                self.step = 0
-        else:
-            ecranlcd.setText("Non")
-            time.sleep(3)
-            if(self.buttonV.verifRead(self.buttonV.button)):
-                ecranlcd.setText("Vous pouvez deposer le(s) aliment(s)")
-                time.sleep(5)
-                self.step = 8 #fin
-
-            elif(self.buttonD.verifRead(self.buttonD.button)):
-                ecranlcd.setText("Vous avez annule")
-                time.sleep(5)
-                self.step = 0
-
-    def datePeremption(self):
-        jour = 31
-        mois = 12
-        annee = 2035
-        if(self.stepdate == 1):
-            valPotentio = potentio.readFromNb(jour)
-            for i in range(1,jour+1):
-                if(valPotentio == jour - (i)):
-                    stri = str(i)
-                    ecranlcd.setText(""+stri+"/"+self.m+"/"+self.a+"")
-                    time.sleep(3)
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.j = str(i)
-                        ecranlcd.setText("Choisissez le mois :")
-                        time.sleep(5)
-                        self.stepdate = 2 #mois
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule")
-                        time.sleep(5)
-                        self.step = 0
-                        
-                elif(valPotentio == jour):
-                    stri = str(jour)
-                    ecranlcd.setText(""+stri+"/"+self.m+"/"+self.a+"")
-                    time.sleep(3)
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.j = str(jour)
-                        ecranlcd.setText("Choisissez le mois :")
-                        time.sleep(5)
-                        self.stepdate = 2 #mois
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule")
-                        time.sleep(5)
-                        self.step = 0
-
-
-        elif(self.stepdate == 2):
-            valPotentio = potentio.readFromNb(mois)
-            for i in range(1,mois+1):
-                if(valPotentio == mois - (i)):
-                    stri = str(i)
-                    ecranlcd.setText(""+self.j+"/"+stri+"/"+self.a+"")
-                    time.sleep(3)
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.m = str(i)
-                        ecranlcd.setText("Choisissez l annee :")
-                        time.sleep(5)
-                        self.stepdate = 3 #annees
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule, choisissez un jour")
-                        time.sleep(5)
-                        self.stepdate = 1 #on reviens sur les jours
-                        
-                elif(valPotentio == mois):
-                    stri = str(mois)
-                    ecranlcd.setText(""+self.j+"/"+stri+"/"+self.a+"")
-                    time.sleep(3)
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.m = str(mois)
-                        ecranlcd.setText("Choisissez l annee :")
-                        time.sleep(5)
-                        self.stepdate = 3 #annees
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule, choisissez un jour")
-                        time.sleep(5)
-                        self.stepdate = 1 #on reviens sur les jours
-
-        if(self.stepdate == 3):
-            taille = annee - 2020
-            print(taille)
-            valPotentio = potentio.readFromNb(taille)
-            for i in range(2020,annee+1):
-                if(valPotentio == annee - (i)):
-                    stri = str(i)
-                    ecranlcd.setText(""+self.j+"/"+self.m+"/"+stri+"")
-                    time.sleep(3)
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.a = str(i)
-                        self.majDate()
-                        ecranlcd.setText("Vous pouvez deposer le(s) aliment(s)")
-                        time.sleep(5)
-                        self.step = 8 #fin
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule, choisssez un mois")
-                        time.sleep(5)
-                        self.stepdate = 2 #on reviens sur les mois
-                        
-                elif(valPotentio == annee):
-                    stri = str(annee)
-                    ecranlcd.setText(""+self.j+"/"+self.m+"/"+stri+"")
-                    time.sleep(3)
-                    if(self.buttonV.verifRead(self.buttonV.button)):
-                        self.a = str(annee)
-                        self.majDate()
-                        ecranlcd.setText("Vous pouvez deposer le(s) aliment(s)")
-                        time.sleep(5)
-                        self.step = 8 #fin
-
-                    elif(self.buttonD.verifRead(self.buttonD.button)):
-                        ecranlcd.setText("Vous avez annule, choisssez un mois")
-                        time.sleep(5)
-                        self.stepdate = 2 #on reviens sur les mois
-
-
-
-    def prise(self):
         choix = False
         while choix == False :
-            categorie = self.convertCat(self.categorie)
-            liste = self.listAl(categorie)
-            taille = len(liste)
             valPotentio = potentio.readFromNb(taille)
             for i in range(1,taille+1):
-                if liste[i-1][2] != '0':
                     if(valPotentio == taille - (i)):
                         ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
                         time.sleep(2)
-                        
+                            
                         if(self.buttonV.verifRead(self.buttonV.button)):
                             self.id = liste[i-1][0]
                             ecranlcd.setText("Choisissez une quantite : ")
                             time.sleep(2)
                             choix = True
-                            self.quantite() #choix quantite
+                            self.quantiteDepot() #choix quantite
 
                         elif(self.buttonD.verifRead(self.buttonD.button)):
                             ecranlcd.setText("Vous avez annule")
                             time.sleep(5)
                             choix = True
-                            self.debut()
-                        
+                            self.depot()
+                            
                     elif(valPotentio == taille):
                         ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
                         time.sleep(2)
@@ -477,16 +266,263 @@ class Choix():
                             ecranlcd.setText("Choisissez une quantite : ")
                             time.sleep(2)
                             choix = True
-                            self.quantite()#choix quantite
+                            self.quantiteDepot() #choix quantite
+
+                        elif(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule")
+                            time.sleep(5)
+                            choix = True
+                            self.depot()
+
+    #Choix de la quantite a deposer
+    def quantiteDepot(self):
+        liste = self.listeQte(self.id)
+        quantite = 10 #on met une quantite max a 10
+        choix = False
+        while choix == False :
+            valPotentio = potentio.readFromNb(quantite)
+            for i in range(1,quantite+1) :
+                if(valPotentio == quantite - (i)):
+                    stri = str(i)
+                    ecranlcd.setText(""+stri+"")
+                    time.sleep(3)
+                    if(self.buttonV.verifRead(self.buttonV.button)):
+                        self.qte = i
+                        self.majStock(True)
+                        ecranlcd.setText("Date de peremption ?")
+                        time.sleep(5)
+                        choix = True
+                        self.choixDate() #choix date de peremption
+
+                    elif(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
+                        choix = True
+                        self.depot()
+                        
+                elif(valPotentio == quantite):
+                    stri = str(quantite)
+                    ecranlcd.setText(""+stri+"")
+                    time.sleep(3)
+                    if(self.buttonV.verifRead(self.buttonV.button)):
+                        self.qte = i
+                        self.majStock(True)
+                        ecranlcd.setText("Date de peremption ?")
+                        time.sleep(5)
+                        choix = True
+                        self.choixDate() #choix date de peremption
+
+                    elif(self.buttonD.verifRead(self.buttonD.button)):
+                        ecranlcd.setText("Vous avez annule")
+                        time.sleep(5)
+                        choix = True
+                        self.depot()
+
+    #Demande a l utilisateur si le(s) aliment(s) possede un edate de peremption
+    def choixDate(self):
+        choix = False
+        while choix == False :
+            valPotentio = potentio.readFromNb(2)
+            if(valPotentio == 0):
+                ecranlcd.setText("Oui")
+                time.sleep(3)
+                if(self.buttonV.verifRead(self.buttonV.button)):
+                    ecranlcd.setText("Entrez la date")
+                    time.sleep(5)
+                    choix = True
+                    self.datePeremption() #date de peremption
+
+                elif(self.buttonD.verifRead(self.buttonD.button)):
+                    ecranlcd.setText("Vous avez annule")
+                    time.sleep(5)
+                    choix = True
+                    self.depot()
+            else:
+                ecranlcd.setText("Non")
+                time.sleep(3)
+                if(self.buttonV.verifRead(self.buttonV.button)):
+                    ecranlcd.setText("Vous pouvez deposer le(s) aliment(s)")
+                    time.sleep(5)
+                    choix = True
+                    self.fin() #fin
+
+                elif(self.buttonD.verifRead(self.buttonD.button)):
+                    ecranlcd.setText("Vous avez annule")
+                    time.sleep(5)
+                    choix = True
+                    self.depot()
+
+    #Choix de la date de peremption
+    def datePeremption(self):
+        jour = 31
+        mois = 12
+        annee = 2035
+        choix = False
+        while choix == False:
+            if(self.stepdate == 1):
+                valPotentio = potentio.readFromNb(jour)
+                for i in range(1,jour+1):
+                    if(valPotentio == jour - (i)):
+                        stri = str(i)
+                        ecranlcd.setText(""+stri+"/"+self.m+"/"+self.a+"")
+                        time.sleep(3)
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.j = str(i)
+                            ecranlcd.setText("Choisissez le mois :")
+                            time.sleep(5)
+                            self.stepdate = 2 #mois
 
                         elif(self.buttonD.verifRead(self.buttonD.button)):
                             ecranlcd.setText("Vous avez annule")
                             time.sleep(5)
                             choix = True
                             self.debut()
+                            
+                    elif(valPotentio == jour):
+                        stri = str(jour)
+                        ecranlcd.setText(""+stri+"/"+self.m+"/"+self.a+"")
+                        time.sleep(3)
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.j = str(jour)
+                            ecranlcd.setText("Choisissez le mois :")
+                            time.sleep(5)
+                            self.stepdate = 2 #mois
+
+                        elif(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule")
+                            time.sleep(5)
+                            choix = True
+                            self.debut()
+
+
+            elif(self.stepdate == 2):
+                valPotentio = potentio.readFromNb(mois)
+                for i in range(1,mois+1):
+                    if(valPotentio == mois - (i)):
+                        stri = str(i)
+                        ecranlcd.setText(""+self.j+"/"+stri+"/"+self.a+"")
+                        time.sleep(3)
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.m = str(i)
+                            ecranlcd.setText("Choisissez l annee :")
+                            time.sleep(5)
+                            self.stepdate = 3 #annees
+
+                        elif(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule, choisissez un jour")
+                            time.sleep(5)
+                            self.stepdate = 1 #on reviens sur les jours
+                            
+                    elif(valPotentio == mois):
+                        stri = str(mois)
+                        ecranlcd.setText(""+self.j+"/"+stri+"/"+self.a+"")
+                        time.sleep(3)
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.m = str(mois)
+                            ecranlcd.setText("Choisissez l annee :")
+                            time.sleep(5)
+                            self.stepdate = 3 #annees
+
+                        elif(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule, choisissez un jour")
+                            time.sleep(5)
+                            self.stepdate = 1 #on reviens sur les jours
+
+            if(self.stepdate == 3):
+                taille = annee - 2020
+                valPotentio = potentio.readFromNb(taille)
+                for i in range(2020,annee+1):
+                    if(valPotentio == annee - (i)):
+                        stri = str(i)
+                        ecranlcd.setText(""+self.j+"/"+self.m+"/"+stri+"")
+                        time.sleep(3)
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.a = str(i)
+                            self.majDate()
+                            ecranlcd.setText("Vous pouvez deposer le(s) aliment(s)")
+                            time.sleep(5)
+                            choix = True
+                            self.fin() #fin
+
+                        elif(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule, choisssez un mois")
+                            time.sleep(5)
+                            self.stepdate = 2 #on reviens sur les mois
+                            
+                    elif(valPotentio == annee):
+                        stri = str(annee)
+                        ecranlcd.setText(""+self.j+"/"+self.m+"/"+stri+"")
+                        time.sleep(3)
+                        if(self.buttonV.verifRead(self.buttonV.button)):
+                            self.a = str(annee)
+                            self.majDate()
+                            ecranlcd.setText("Vous pouvez deposer le(s) aliment(s)")
+                            time.sleep(5)
+                            choix = True
+                            self.fin() #fin
+
+                        elif(self.buttonD.verifRead(self.buttonD.button)):
+                            ecranlcd.setText("Vous avez annule, choisssez un mois")
+                            time.sleep(5)
+                            self.stepdate = 2 #on reviens sur les mois
+
+
+    #Affichage des aliments disponibles dans la categorie choisie
+    def prise(self):
+        categorie = self.convertCat(self.categorie)
+        liste = self.listAl(categorie)
+        taille = len(liste)
+
+        choix = False
+        while choix == False :
             
+            #si la categorie ne possede aucuns aliments presents dans le frigo
+            if(taille == 0):
+                ecranlcd.setText("Aucun aliment n est disponible pour cette categorie")
+                time.sleep(5)
+                choix = True
+                self.categories() #retour aux categories
+            
+            else:
+                valPotentio = potentio.readFromNb(taille)
+                for i in range(1,taille+1):
+                    #on n affiche pas les aliments qui ne sont pas presents dans le frigo
+                    if liste[i-1][2] != '0':
+                        if(valPotentio == taille - (i)):
+                            ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
+                            time.sleep(2)
+                            
+                            if(self.buttonV.verifRead(self.buttonV.button)):
+                                self.id = liste[i-1][0]
+                                ecranlcd.setText("Choisissez une quantite : ")
+                                time.sleep(2)
+                                choix = True
+                                self.quantite() #choix quantite
 
+                            elif(self.buttonD.verifRead(self.buttonD.button)):
+                                ecranlcd.setText("Vous avez annule")
+                                time.sleep(5)
+                                choix = True
+                                self.debut()
+                            
+                        elif(valPotentio == taille):
+                            ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
+                            time.sleep(2)
 
+                            if(self.buttonV.verifRead(self.buttonV.button)):
+                                self.id = liste[i-1][0]
+                                ecranlcd.setText("Choisissez une quantite : ")
+                                time.sleep(2)
+                                choix = True
+                                self.quantite()#choix quantite
+
+                            elif(self.buttonD.verifRead(self.buttonD.button)):
+                                ecranlcd.setText("Vous avez annule")
+                                time.sleep(5)
+                                choix = True
+                                self.debut()
+
+    #Choix de la quantite a prendre, selon le stock actuel
     def quantite(self):
         choix = False
         while choix == False:
@@ -505,8 +541,7 @@ class Choix():
                         ecranlcd.setText("Retirez le(s) aliment(s) du frigo")
                         time.sleep(5)
                         choix = True
-                        self.fin()
-                        #self.step = 8 #fin
+                        self.fin() #fin
 
                     elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
@@ -524,28 +559,26 @@ class Choix():
                         ecranlcd.setText("Retirez le(s) aliment(s) du frigo")
                         time.sleep(5)
                         choix = True
-                        self.fin()
-                        #self.step = 8 #fin
+                        self.fin() #fin
 
                     elif(self.buttonD.verifRead(self.buttonD.button)):
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
                         choix = True
                         self.debut()
-                        #self.step = 0
                     
-        
+    #Fin du choix pour l utilisateur     
     def fin(self):
          ecranlcd.setText("Merci au revoir")
          time.sleep(2)
          ecranlcd.setText("")
          self.identif = 0
          self.step = 8
-         #self.run()
 
+    #
     def listeQte(self,id):
         liste=[]
-        with  open('./utils/stock.csv','r') as f:
+        with  open('/home/pi/ASAIOT/utils/stock.csv','r') as f:
             reader = csv.reader(f)
             next(reader)
             for row in reader:
@@ -554,9 +587,10 @@ class Choix():
             f.close()           
         return liste
 
+    #Liste des aliments selon la categorie choisie
     def listAl(self,categorie):
         liste=[]
-        with  open('./utils/stock.csv','r') as f:
+        with  open('/home/pi/ASAIOT/utils/stock.csv','r') as f:
             reader = csv.reader(f)
             next(reader)
             for row in reader:
@@ -565,6 +599,7 @@ class Choix():
             f.close()
         return liste
 
+    #Convertit l id de la categorie afin quelle corresponde au csv
     def convertCat(self,cat):
         if self.categorie == 0 :
             return 'LEGUMES'
@@ -583,9 +618,9 @@ class Choix():
         else :
             return 'AUTRES'
 
-                                 
+    #Met a jour le stock                             
     def majStock(self,ajout): #ajout booleen : true si il faut ajouter au stock false sinon
-        text = open("./utils/stock.csv", "r")
+        text = open("/home/pi/ASAIOT/utils/stock.csv", "r")
         txt=csv.reader(text)
 
         liste=[]
@@ -603,16 +638,16 @@ class Choix():
                 
             liste.append(ligne)
 
-        out=open("./utils/stock.csv", "w")
+        out=open("/home/pi/ASAIOT/utils/stock.csv", "w")
         wr=csv.writer(out)  
         wr.writerows(liste)
         out.close()
         text.close()
         print("Mise a jour du stock")
 
-
-    def majDate(self): #ajout booleen : true si il faut ajouter au stock false sinon
-        text = open("./utils/stock.csv", "r")
+    #Rajoute la date de peremption au csv
+    def majDate(self):
+        text = open("/home/pi/ASAIOT/utils/stock.csv", "r")
         txt=csv.reader(text)
 
         liste=[]
@@ -627,21 +662,10 @@ class Choix():
                 
             liste.append(ligne)
 
-        out=open("./utils/stock.csv", "w")
+        out=open("/home/pi/ASAIOT/utils/stock.csv", "w")
         wr=csv.writer(out)  
         wr.writerows(liste)
         out.close()
         text.close()
         print("Mise a jour du stock")
 
-
-        
-    def pause(self):
-         self.paused = True
-         self.pause_cond.acquire()
-                              
-
-    def resume(self):
-         self.paused = False
-         self.pause_cond.notify()
-         self.pause_cond.release()
