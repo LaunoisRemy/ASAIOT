@@ -255,7 +255,7 @@ class Choix():
                             ecranlcd.setText("Vous avez annule")
                             time.sleep(5)
                             choix = True
-                            self.depot()
+                            self.debut()
                             
                     elif(valPotentio == taille):
                         ecranlcd.setText(""+liste[i-1][1]+"")#nom des produits
@@ -272,7 +272,7 @@ class Choix():
                             ecranlcd.setText("Vous avez annule")
                             time.sleep(5)
                             choix = True
-                            self.depot()
+                            self.debut()
 
     #Choix de la quantite a deposer
     def quantiteDepot(self):
@@ -298,7 +298,7 @@ class Choix():
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
                         choix = True
-                        self.depot()
+                        self.debut()
                         
                 elif(valPotentio == quantite):
                     stri = str(quantite)
@@ -316,7 +316,7 @@ class Choix():
                         ecranlcd.setText("Vous avez annule")
                         time.sleep(5)
                         choix = True
-                        self.depot()
+                        self.debut()
 
     #Demande a l utilisateur si le(s) aliment(s) possede un edate de peremption
     def choixDate(self):
@@ -336,7 +336,7 @@ class Choix():
                     ecranlcd.setText("Vous avez annule")
                     time.sleep(5)
                     choix = True
-                    self.depot()
+                    self.debut()
             else:
                 ecranlcd.setText("Non")
                 time.sleep(3)
@@ -350,7 +350,7 @@ class Choix():
                     ecranlcd.setText("Vous avez annule")
                     time.sleep(5)
                     choix = True
-                    self.depot()
+                    self.debut()
 
     #Choix de la date de peremption
     def datePeremption(self):
